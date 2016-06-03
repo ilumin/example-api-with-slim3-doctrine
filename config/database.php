@@ -1,7 +1,7 @@
 <?php
 
 $config = array(
-    'entityPath' => array(__DIR__ . '/../../src'),
+    'entityPath' => array(__DIR__ . '/../app'),
     'driver'     => 'pdo_mysql',
     'host'       => 'app-database-service',
     'dbname'     => 'app',
