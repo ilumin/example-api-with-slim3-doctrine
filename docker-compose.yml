@@ -8,20 +8,15 @@ services:
     volumes:
       - .:/app
 
-  app-server-config:
-    container_name: app-server-config
-    image: busybox
-    volumes:
-      - ./containers/config/app.conf:/bitnami/nginx/conf/vhosts/site.conf
-
   app-server-service:
     container_name: app-server-service
     image: bitnami/nginx
     ports:
       - 80:80
+    volumes:
+      - ./containers/config/site.conf:/bitnami/nginx/conf/vhosts/site.conf
     volumes_from:
       - app-src
-      - app-server-config
 
   php-fpm-service:
     container_name: php-fpm-service
