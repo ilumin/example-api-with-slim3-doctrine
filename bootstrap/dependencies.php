@@ -11,3 +11,8 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], Monolog\Logger::DEBUG));
     return $logger;
 };
+
+$container['doctrine'] = function ($c) {
+    $databaseConfig = require '../config/database.php';
+    return App\Core\Doctrine::bootstrap($databaseConfig);
+};
