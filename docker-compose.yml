@@ -1,0 +1,39 @@
+version: "2"
+
+services:
+
+  app-src:
+    container_name: app-src
+    image: busybox
+    volumes:
+      - .:/app
+
+  app-server-config:
+    container_name: app-server-config
+    image: busybox
+    volumes:
+      - ./containers/config/app.conf:/bitnami/nginx/conf/vhosts/site.conf
+
+  app-server-service:
+    container_name: app-server-service
+    image: bitnami/nginx
+    ports:
+      - 80:80
+    volumes_from:
+      - app-src
+      - app-server-config
+
+  php-fpm-service:
+    container_name: php-fpm-service
+    image: bitnami/php-fpm
+    volumes_from:
+      - app-src
+
+  app-database-service:
+    container_name: app-database-service
+    image: bitnami/mariadb:latest
+    environment:
+      - MARIADB_DATABASE=app
+      - MARIADB_USER=app
+      - MARIADB_PASSWORD=app
+      - MARIADB_ROOT_PASSWORD=app
