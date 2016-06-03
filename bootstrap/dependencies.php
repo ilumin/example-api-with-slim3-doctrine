@@ -13,6 +13,6 @@ $container['logger'] = function ($c) {
 };
 
 $container['doctrine'] = function ($c) {
-    $databaseConfig = require '../config/database.php';
+    $databaseConfig = require __DIR__ . '/../config/database.php';
     return App\Core\Doctrine::bootstrap($databaseConfig);
 };
