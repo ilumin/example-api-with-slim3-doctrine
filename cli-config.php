@@ -10,8 +10,14 @@ use Doctrine\ORM\Tools\Setup;
 
 try {
     $databaseConfig = require 'config/database.php';
-    $doctrineConfig = Setup::createAnnotationMetadataConfiguration($databaseConfig['entityPath'], true);
-    $entityManager = EntityManager::create($databaseConfig, $doctrineConfig);;
+    $doctrineConfig = Setup::createAnnotationMetadataConfiguration(
+        $databaseConfig['meta']['entityPath'],
+        $databaseConfig['meta']['auto_generate_proxies'],
+        $databaseConfig['meta']['proxy_dir'],
+        $databaseConfig['meta']['cache'],
+        true
+    );
+    $entityManager = EntityManager::create($databaseConfig['connection'], $doctrineConfig);;
     return ConsoleRunner::createHelperSet($entityManager);
 }
 catch (\Exception $e) {

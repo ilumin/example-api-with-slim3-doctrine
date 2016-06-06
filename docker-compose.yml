@@ -27,6 +27,8 @@ services:
   app-database-service:
     container_name: app-database-service
     image: bitnami/mariadb:latest
+    ports:
+      - 3306:3306
     environment:
       - MARIADB_DATABASE=app
       - MARIADB_USER=app
