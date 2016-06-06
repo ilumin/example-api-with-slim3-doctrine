@@ -20,10 +20,11 @@ but unfortunately we use Docker then we should run it on our Docker's container
      
     # create table structure from entities we're already created 
     $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema:create
+    $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema:create --dump-sql
     
     # update table structure from entities we're already updated 
+    # update table structure from entities we're already updated 
     $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema-tool:update
-    
-    # dump SQL
-    $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema:create --dump-sql
+    $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema-tool:update --force
+    $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema-tool:update --dump-sql
     

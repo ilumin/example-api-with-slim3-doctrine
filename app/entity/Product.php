@@ -25,4 +25,10 @@ class Product
      * @var float
      */
     protected $price;
+
+    /**
+     * @Column(type="datetime")
+     * @var \DateTime
+     */
+    protected $created;
 }
