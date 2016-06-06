@@ -1,6 +1,8 @@
 <?php
 // DIC configuration
 
+use App\Resource\ProductResource;
+
 $container = $app->getContainer();
 
 // monolog
@@ -18,5 +20,6 @@ $container['doctrine'] = function ($c) {
 };
 
 $container['App\Action\ProductAction'] = function ($c) {
-    return new App\Action\ProductAction($c->get('doctrine'));
+    $productResource = new ProductResource($c->get('doctrine'));
+    return new App\Action\ProductAction($productResource);
 };

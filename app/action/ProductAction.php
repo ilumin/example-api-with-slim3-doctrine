@@ -1,28 +1,23 @@
 <?php
 namespace App\Action;
 
-use Doctrine\ORM\EntityManager;
+use App\Entity\Product;
+use App\Resource\ProductResource;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
 class ProductAction
 {
-    private $doctrine;
+    private $productResource;
 
-    public function __construct(EntityManager $doctrine)
+    public function __construct(ProductResource $productResource)
     {
-        $this->doctrine = $doctrine;
+        $this->productResource = $productResource;
     }
 
     public function fetch(Request $request, Response $response, $args)
     {
-        $products = $this->doctrine->getRepository('App\Entity\Product')->findAll();
-        $products = array_map(
-            function ($product) {
-                return $product->getData();
-            },
-            $products
-        );
+        $products = $this->productResource->get();
         return $response->withJson($products);
     }
 }
