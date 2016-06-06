@@ -16,3 +16,7 @@ $container['doctrine'] = function ($c) {
     $databaseConfig = require __DIR__ . '/../config/database.php';
     return App\Core\Doctrine::bootstrap($databaseConfig);
 };
+
+$container['App\Action\ProductAction'] = function ($c) {
+    return new App\Action\ProductAction($c->get('doctrine'));
+};

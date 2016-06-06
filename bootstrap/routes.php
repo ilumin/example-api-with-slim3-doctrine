@@ -6,7 +6,7 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$app->get('/products', '\App\Action\ProductAction:fetchAll');
+$app->get('/products', 'App\Action\ProductAction:fetch');
 
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
     /** @var Container $container */
@@ -25,6 +25,8 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
 });
 
 $app->get('/[{name}]', function (Request $request, Response $response, array $args) {
+    var_dump($args);
+    die();
     // Sample log message
     $this->logger->info("Slim-Skeleton '/' route");
 
