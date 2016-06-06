@@ -17,6 +17,12 @@ class ProductAction
     public function fetch(Request $request, Response $response, $args)
     {
         $products = $this->doctrine->getRepository('App\Entity\Product')->findAll();
+        $products = array_map(
+            function ($product) {
+                return $product->getData();
+            },
+            $products
+        );
         return $response->withJson($products);
     }
 }

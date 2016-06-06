@@ -31,4 +31,12 @@ class Product
      * @var \DateTime
      */
     protected $created;
+
+    /**
+     * @return array
+     */
+    public function getData()
+    {
+        return get_object_vars($this);
+    }
 }
