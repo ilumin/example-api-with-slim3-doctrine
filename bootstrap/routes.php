@@ -6,18 +6,7 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    $name = $request->getAttribute('name');
-    $data = array(
-        'hello' => $name,
-    );
-    $response = $response->withJson($data);
-    return $response;
-});
+$app->get('/products', '\App\Action\ProductAction:fetchAll');
 
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
     /** @var Container $container */
@@ -33,4 +22,17 @@ $app->get('/product/{id}', function (Request $request, Response $response, array
     }
 
     return $response->withJson($product);
+});
+
+$app->get('/[{name}]', function (Request $request, Response $response, array $args) {
+    // Sample log message
+    $this->logger->info("Slim-Skeleton '/' route");
+
+    // Render index view
+    $name = $request->getAttribute('name');
+    $data = array(
+        'hello' => $name,
+    );
+    $response = $response->withJson($data);
+    return $response;
 });
