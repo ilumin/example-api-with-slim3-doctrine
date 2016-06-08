@@ -15,9 +15,10 @@ class ProductAction
         $this->productResource = $productResource;
     }
 
-    public function fetch(Request $request, Response $response, $args)
+    public function get(Request $request, Response $response, $args)
     {
-        $products = $this->productResource->get();
+        $productSlug = isset($args['slug']) ? $args['slug'] : null;
+        $products = $this->productResource->get($productSlug);
         return $response->withJson($products);
     }
 }

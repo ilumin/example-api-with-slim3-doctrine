@@ -6,7 +6,7 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-$app->get('/products', 'App\Action\ProductAction:fetch');
+$app->get('/products[/{slug}]', 'App\Action\ProductAction:get');
 $app->get('/categories[/{slug}]', 'App\Action\CategoryAction:get');
 
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
