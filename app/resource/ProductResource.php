@@ -80,6 +80,29 @@ class ProductResource extends AbstractResource
         }
     }
 
+    public function remove($slug)
+    {
+        try {
+            /** @var EntityRepository $productEntity */
+            $productEntity = $this->doctrine->getRepository('App\Entity\Product');
+
+            /** @var Product $product */
+            $product = $productEntity->findOneBy([
+                'slug' => $slug,
+            ]);
+            if (!$product) {
+                throw new \Exception('Product not exist.');
+            }
+
+            $this->doctrine->remove($product);
+            $this->doctrine->flush();
+            return true;
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Remove product fail with (' . $e->getMessage() . ')');
+        }
+    }
+
     /**
      * @param $categoryId
      * @param $product

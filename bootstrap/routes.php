@@ -9,6 +9,7 @@ use Slim\Http\Response;
 $app->get('/products[/{slug}]', 'App\Action\ProductAction:get');
 $app->post('/products', 'App\Action\ProductAction:create');
 $app->post('/products/{slug}', 'App\Action\ProductAction:update');
+$app->delete('/products/{slug}', 'App\Action\ProductAction:remove');
 
 $app->get('/categories[/{slug}]', 'App\Action\CategoryAction:get');
 

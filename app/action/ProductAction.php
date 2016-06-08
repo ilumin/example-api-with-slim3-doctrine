@@ -34,4 +34,11 @@ class ProductAction
         $result = $this->productResource->update($productSlug, $request->getParsedBody());
         return $response->withJson($result);
     }
+
+    public function remove(Request $request, Response $response, $args)
+    {
+        $productSlug = isset($args['slug']) ? $args['slug'] : null;
+        $result = $this->productResource->remove($productSlug);
+        return $response->withJson($result);
+    }
 }
