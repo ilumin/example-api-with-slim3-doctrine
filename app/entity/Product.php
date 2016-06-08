@@ -8,35 +8,49 @@ namespace App\Entity;
 class Product
 {
     /**
-     * @Id @Column(type="integer")
-     * @GenerateValue
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
+     * @Column(type="integer")
      * @var int
      */
-    protected $id;
+    public $id;
 
     /**
      * @Column(type="string")
      * @var string
      */
-    protected $name;
+    public $name;
 
     /**
      * @Column(type="float")
      * @var float
      */
-    protected $price;
+    public $price;
 
     /**
-     * @Column(type="datetime")
+     * @Column(type="datetime", name="created_at")
      * @var \DateTime
      */
-    protected $created;
+    public $createdAt;
+
+    /**
+     * @ManyToOne(targetEntity="Category", inversedBy="products")
+     * @var Category
+     */
+    public $category;
+
+    public function getCategoryData()
+    {
+        return $this->category->getData();
+    }
 
     /**
      * @return array
      */
     public function getData()
     {
-        return get_object_vars($this);
+        $productData = get_object_vars($this);
+        $productData['category'] = $this->getCategoryData();
+        return $productData;
     }
 }
