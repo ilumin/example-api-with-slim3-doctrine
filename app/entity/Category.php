@@ -22,6 +22,12 @@ class Category
     public $name;
 
     /**
+     * @Column(type="string", unique=true)
+     * @var string
+     */
+    public $slug;
+
+    /**
      * @Column(type="datetime", name="created_at")
      * @var \DateTime
      */
@@ -52,6 +58,7 @@ class Category
         return [
             'id'        => $this->id,
             'name'      => $this->name,
+            'slug'      => $this->slug,
             'createdAt' => $this->createdAt,
         ];
     }

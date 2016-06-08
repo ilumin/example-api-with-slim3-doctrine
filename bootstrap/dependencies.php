@@ -2,6 +2,7 @@
 // DIC configuration
 
 use App\Resource\ProductResource;
+use App\Resource\CategoryResource;
 
 $container = $app->getContainer();
 
@@ -19,7 +20,11 @@ $container['doctrine'] = function ($c) {
     return App\Core\Doctrine::bootstrap($databaseConfig);
 };
 
-$container['App\Action\ProductAction'] = function ($c) {
+$container[App\Action\ProductAction::class] = function ($c) {
     $productResource = new ProductResource($c->get('doctrine'));
     return new App\Action\ProductAction($productResource);
+};
+$container[App\Action\CategoryAction::class] = function ($c) {
+    $categoryResource = new CategoryResource($c->get('doctrine'));
+    return new App\Action\CategoryAction($categoryResource);
 };

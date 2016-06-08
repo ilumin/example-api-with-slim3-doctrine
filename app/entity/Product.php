@@ -22,6 +22,12 @@ class Product
     public $name;
 
     /**
+     * @Column(type="string", unique=true)
+     * @var string
+     */
+    public $slug;
+
+    /**
      * @Column(type="float")
      * @var float
      */
