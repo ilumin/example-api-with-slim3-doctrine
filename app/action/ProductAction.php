@@ -27,4 +27,11 @@ class ProductAction
         $result = $this->productResource->create($request->getParsedBody());
         return $response->withJson($result);
     }
+
+    public function update(Request $request, Response $response, $args)
+    {
+        $productSlug = isset($args['slug']) ? $args['slug'] : null;
+        $result = $this->productResource->update($productSlug, $request->getParsedBody());
+        return $response->withJson($result);
+    }
 }
