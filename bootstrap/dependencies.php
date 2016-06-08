@@ -16,8 +16,8 @@ $container['logger'] = function ($c) {
 };
 
 $container['doctrine'] = function ($c) {
-    $databaseConfig = require __DIR__ . '/../config/database.php';
-    return App\Core\Doctrine::bootstrap($databaseConfig);
+    //$databaseConfig = require __DIR__ . '/../config/database.php';
+    return require __DIR__ . '/../bootstrap/doctrine.php';
 };
 
 $container[App\Action\ProductAction::class] = function ($c) {
