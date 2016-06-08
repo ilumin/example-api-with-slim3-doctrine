@@ -28,3 +28,11 @@ but unfortunately we use Docker then we should run it on our Docker's container
     $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema-tool:update --force
     $ docker exec -it php-fpm-service php /app/vendor/bin/doctrine orm:schema-tool:update --dump-sql
     
+## JSON Response 
+
+We have a lot JSON standard here
+
+1. JSend [https://labs.omniti.com/labs/jsend]
+1. JSON API [http://jsonapi.org/]
+1. HAL [http://stateless.co/hal_specification.html]
+
