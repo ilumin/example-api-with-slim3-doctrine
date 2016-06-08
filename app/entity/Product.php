@@ -43,7 +43,7 @@ class Product
      * @ManyToOne(targetEntity="Category", inversedBy="products")
      * @var Category
      */
-    public $category;
+    protected $category;
 
     public function getCategoryData()
     {

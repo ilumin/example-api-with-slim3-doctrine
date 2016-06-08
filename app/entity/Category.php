@@ -34,10 +34,10 @@ class Category
     public $createdAt;
 
     /**
-     * @OneToMany(targetEntity="Product", mappedBy="category_id", indexBy="id", fetch="EXTRA_LAZY")
+     * @OneToMany(targetEntity="Product", mappedBy="category", fetch="EXTRA_LAZY")
      * @var Product[]
      */
-    public $products;
+    protected $products;
 
     public function getProducts()
     {
@@ -61,5 +61,12 @@ class Category
             'slug'      => $this->slug,
             'createdAt' => $this->createdAt,
         ];
+    }
+
+    public function getFullData()
+    {
+        $categoryData = $this->getData();
+        $categoryData['products'] = $this->getProducts();
+        return $categoryData;
     }
 }

@@ -25,7 +25,7 @@ class CategoryResource extends AbstractResource
             ));
 
             if ($category) {
-                return $category->getData();
+                return $category->getFullData();
             }
         }
 
