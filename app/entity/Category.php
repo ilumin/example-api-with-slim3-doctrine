@@ -1,6 +1,8 @@
 <?php
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * @Entity
  * @Table(name="categories")
@@ -38,6 +40,11 @@ class Category
      * @var Product[]
      */
     protected $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
 
     public function getProducts()
     {

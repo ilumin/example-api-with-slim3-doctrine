@@ -7,6 +7,8 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 
 $app->get('/products[/{slug}]', 'App\Action\ProductAction:get');
+$app->post('/products', 'App\Action\ProductAction:create');
+
 $app->get('/categories[/{slug}]', 'App\Action\CategoryAction:get');
 
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {

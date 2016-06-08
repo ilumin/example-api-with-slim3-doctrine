@@ -45,6 +45,14 @@ class Product
      */
     protected $category;
 
+    public function __construct($productData)
+    {
+        $this->name = $productData['name'];
+        $this->slug = $productData['slug'];
+        $this->price = $productData['price'];
+        $this->createdAt = new \DateTime();
+    }
+
     public function getCategoryData()
     {
         return $this->category->getData();
@@ -58,5 +66,10 @@ class Product
         $productData = get_object_vars($this);
         $productData['category'] = $this->getCategoryData();
         return $productData;
+    }
+
+    public function setCategory(Category $category)
+    {
+        $this->category = $category;
     }
 }

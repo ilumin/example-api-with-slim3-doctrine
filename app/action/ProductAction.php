@@ -21,4 +21,10 @@ class ProductAction
         $products = $this->productResource->get($productSlug);
         return $response->withJson($products);
     }
+
+    public function create(Request $request, Response $response, $args)
+    {
+        $result = $this->productResource->create($request->getParsedBody());
+        return $response->withJson($result);
+    }
 }

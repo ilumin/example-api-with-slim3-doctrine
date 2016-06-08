@@ -35,4 +35,25 @@ class ProductResource extends AbstractResource
 
         return false;
     }
+
+    public function create($productData)
+    {
+        try {
+            $product = new Product($productData);
+
+            if (isset($productData['category_id'])) {
+                /** @var EntityRepository $productEntity */
+                $categoryEntity = $this->doctrine->getRepository('App\Entity\Category');
+                $category = $categoryEntity->find($productData['category_id']);
+                $product->setCategory($category);
+            }
+
+            $this->doctrine->persist($product);
+            $this->doctrine->flush();
+            return $product;
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Insert product fail with (' . $e->getMessage() . ')');
+        }
+    }
 }
