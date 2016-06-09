@@ -2,61 +2,55 @@
 namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as GEDMO;
-use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="products")
+ * @Entity
+ * @Table(name="products")
+ *
+ * @GEDMO\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Product
 {
     /**
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     * @ORM\Column(type="integer")
-     *
+     * @Id
+     * @GeneratedValue(strategy="IDENTITY")
+     * @Column(type="integer")
      * @var int
      */
     public $id;
 
     /**
-     * @ORM\Column(type="string")
-     *
+     * @Column(type="string")
      * @var string
      */
     public $name;
 
     /**
-     * @ORM\Column(type="string", unique=true)
-     *
+     * @Column(type="string", unique=true)
      * @var string
      */
     public $slug;
 
     /**
-     * @ORM\Column(type="float")
-     *
+     * @Column(type="float")
      * @var float
      */
     public $price;
 
     /**
-     * @ORM\Column(type="datetime", name="created_at")
-     *
+     * @Column(type="datetime", name="created_at")
      * @var \DateTime
      */
     public $createdAt;
 
     /**
-     * @ORM\Column(type="datetime", name="deleted_at")
-     *
+     * @Column(type="datetime", name="deleted_at")
      * @var \DateTime
      */
     public $deletedAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     *
+     * @ManyToOne(targetEntity="Category", inversedBy="products")
      * @var Category
      */
     protected $category;
