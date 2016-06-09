@@ -120,4 +120,13 @@ class Product
         $this->tags->removeElement($tag);
         $tag->removeProduct($this);
     }
+
+    public function removeAllTag()
+    {
+        if ($this->tags->count() <= 0) {
+            return;
+        }
+
+        $this->tags->clear();
+    }
 }

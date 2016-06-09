@@ -14,12 +14,9 @@ class ProductResource extends AbstractResource
         $productEntity = $this->doctrine->getRepository('App\Entity\Product');
         if (empty($slug)) {
             $products = $productEntity->findAll();
-            $products = array_map(
-                function ($product) {
-                    return $product->getData();
-                },
-                $products
-            );
+            $products = array_map(function ($product) {
+                return $product->getData();
+            }, $products);
 
             return $products;
         }
@@ -41,7 +38,8 @@ class ProductResource extends AbstractResource
     {
         try {
             $product = new Product($productData);
-            $this->setCategory($productData['category_id'], $product);
+            $product = $this->setCategory($productData['category_id'], $product);
+            $product = $this->setTags($productData['tags'], $product);
 
             $this->doctrine->persist($product);
             $this->doctrine->flush();
@@ -69,7 +67,8 @@ class ProductResource extends AbstractResource
             $product->name = $productData['name'];
             $product->price = $productData['price'];
 
-            $this->setCategory($productData['category_id'], $product);
+            $product = $this->setCategory($productData['category_id'], $product);
+            $product = $this->setTags($productData['tags'], $product);
 
             $this->doctrine->persist($product);
             $this->doctrine->flush();
@@ -104,10 +103,12 @@ class ProductResource extends AbstractResource
     }
 
     /**
-     * @param $categoryId
-     * @param $product
+     * @param         $categoryId
+     * @param Product $product
+     *
+     * @return Product
      */
-    public function setCategory($categoryId, $product)
+    public function setCategory($categoryId, Product $product)
     {
         if (empty($categoryId)) {
             return $product;
@@ -119,6 +120,29 @@ class ProductResource extends AbstractResource
         /** @var Category $category */
         $category = $categoryEntity->find($categoryId);
         $product->setCategory($category);
+
+        return $product;
+    }
+
+    private function setTags($tags, Product $product)
+    {
+        if (empty($tags)){
+            return $product;
+        }
+
+        /** @var EntityRepository $tagEntity */
+        $tagEntity = $this->doctrine->getRepository('App\Entity\Tag');
+        $tags = $tagEntity->findBy([
+            'id' => $tags,
+        ]);
+        if (!$tags) {
+            return $product;
+        }
+
+        $product->removeAllTag();
+        foreach ($tags as $tag) {
+            $product->addTag($tag);
+        }
 
         return $product;
     }

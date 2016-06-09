@@ -50,7 +50,7 @@ class Tag
     protected $deletedAt;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Product", mappedBy="productTags")
+     * @ORM\ManyToMany(targetEntity="Product", mappedBy="tags")
      *
      * @var Collection|Product[]
      */
