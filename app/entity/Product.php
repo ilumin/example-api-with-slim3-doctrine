@@ -44,7 +44,7 @@ class Product
     public $createdAt;
 
     /**
-     * @Column(type="datetime", name="deleted_at")
+     * @Column(type="datetime", name="deleted_at", nullable=true)
      * @var \DateTime
      */
     public $deletedAt;
