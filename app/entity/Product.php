@@ -72,7 +72,7 @@ class Product
      *
      * @var Collection|Tag[]
      */
-    protected $productTags;
+    protected $tags;
 
     public function __construct($productData)
     {
@@ -80,8 +80,7 @@ class Product
         $this->slug = $productData['slug'];
         $this->price = $productData['price'];
         $this->createdAt = isset($categoryData['createdAt']) ? $categoryData['createdAt'] : new \DateTime();
-
-        $this->productTags = new ArrayCollection();
+        $this->tags = new ArrayCollection();
     }
 
     public function getCategoryData()
@@ -93,6 +92,7 @@ class Product
     {
         $productData = get_object_vars($this);
         $productData['category'] = $this->getCategoryData();
+        $productData['tags'] = $this->tags->toArray();
         return $productData;
     }
 
@@ -103,21 +103,21 @@ class Product
 
     public function addTag(Tag $tag)
     {
-        if ($this->productTags->contains($tag)) {
+        if ($this->tags->contains($tag)) {
             return;
         }
 
-        $this->productTags->add($tag);
+        $this->tags->add($tag);
         $tag->addProduct($this);
     }
 
     public function removeTag(Tag $tag)
     {
-        if (!$this->productTags->contains($tag)) {
+        if (!$this->tags->contains($tag)) {
             return;
         }
 
-        $this->productTags->removeElement($tag);
+        $this->tags->removeElement($tag);
         $tag->removeProduct($this);
     }
 }
