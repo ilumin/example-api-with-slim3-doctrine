@@ -29,6 +29,13 @@ class Tag
     public $name;
 
     /**
+     * @ORM\Column(type="string")
+     *
+     * @var string
+     */
+    public $slug;
+
+    /**
      * @ORM\Column(type="datetime", name="created_at")
      *
      * @var \DateTime
