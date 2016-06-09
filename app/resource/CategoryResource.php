@@ -3,16 +3,14 @@ namespace App\Resource;
 
 use App\AbstractResource;
 use App\Entity\Category;
-use Doctrine\ORM\EntityRepository;
 
-class CategoryResource extends AbstractResource
+class CategoryResource extends AbstractResource implements ResourceInterface
 {
     public function get($slug = null)
     {
-        /** @var EntityRepository $categoryEntity */
-        $categoryEntity = $this->doctrine->getRepository('App\Entity\Category');
+        $categoryRepository = $this->getRepository('App\Entity\Category');
         if (empty($slug)) {
-            $categories = $categoryEntity->findAll();
+            $categories = $categoryRepository->findAll();
             $categories = array_map(function($category) {
                 return $category->getData();
             }, $categories);
@@ -20,7 +18,7 @@ class CategoryResource extends AbstractResource
         }
         else{
             /** @var Category $category */
-            $category = $categoryEntity->findOneBy(array(
+            $category = $categoryRepository->findOneBy(array(
                 'slug' => $slug,
             ));
 
@@ -49,11 +47,10 @@ class CategoryResource extends AbstractResource
     public function update($slug, $categoryData)
     {
         try {
-            /** @var EntityRepository $categoryEntity */
-            $categoryEntity = $this->doctrine->getRepository('App\Entity\Category');
+            $categoryRepository = $this->getRepository('App\Entity\Category');
 
             /** @var Category $category */
-            $category = $categoryEntity->findOneBy([
+            $category = $categoryRepository->findOneBy([
                 'slug' => $slug,
             ]);
             if (!$category) {
@@ -74,11 +71,10 @@ class CategoryResource extends AbstractResource
     public function remove($slug)
     {
         try {
-            /** @var EntityRepository $categoryEntity */
-            $categoryEntity = $this->doctrine->getRepository('App\Entity\Category');
+            $categoryRepository = $this->getRepository('App\Entity\Category');
 
             /** @var Category $category */
-            $category = $categoryEntity->findOneBy([
+            $category = $categoryRepository->findOneBy([
                 'slug' => $slug,
             ]);
             if (!$category) {

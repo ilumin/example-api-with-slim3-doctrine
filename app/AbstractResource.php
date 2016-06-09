@@ -14,4 +14,14 @@ abstract class AbstractResource
     {
         $this->doctrine = $doctrine;
     }
+
+    /**
+     * @param $entityNameSpace
+     *
+     * @return \Doctrine\ORM\EntityRepository
+     */
+    public function getRepository($entityNameSpace)
+    {
+        return $this->doctrine->getRepository($entityNameSpace);
+    }
 }
