@@ -2,7 +2,6 @@
 
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
-use Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter;
 
 $databaseConfig = require __DIR__ . '/../config/database.php';
 $doctrineConfig = Setup::createAnnotationMetadataConfiguration(
@@ -12,9 +11,6 @@ $doctrineConfig = Setup::createAnnotationMetadataConfiguration(
     $databaseConfig['meta']['cache'],
     true
 );
-
-// register soft delete filter
-$doctrineConfig->addFilter('soft-deleteable', SoftDeleteableFilter::class);
 
 $entityManager = EntityManager::create($databaseConfig['connection'], $doctrineConfig);
 

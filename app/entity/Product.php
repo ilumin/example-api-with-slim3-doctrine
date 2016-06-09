@@ -1,13 +1,9 @@
 <?php
 namespace App\Entity;
 
-use Gedmo\Mapping\Annotation as GEDMO;
-
 /**
  * @Entity
  * @Table(name="products")
- *
- * @GEDMO\SoftDeleteable(fieldName="deletedAt", timeAware=false)
  */
 class Product
 {
@@ -15,42 +11,49 @@ class Product
      * @Id
      * @GeneratedValue(strategy="IDENTITY")
      * @Column(type="integer")
+     *
      * @var int
      */
     public $id;
 
     /**
      * @Column(type="string")
+     *
      * @var string
      */
     public $name;
 
     /**
      * @Column(type="string", unique=true)
+     *
      * @var string
      */
     public $slug;
 
     /**
      * @Column(type="float")
+     *
      * @var float
      */
     public $price;
 
     /**
      * @Column(type="datetime", name="created_at")
+     *
      * @var \DateTime
      */
     public $createdAt;
 
     /**
      * @Column(type="datetime", name="deleted_at", nullable=true)
+     *
      * @var \DateTime
      */
-    public $deletedAt;
+    protected $deletedAt;
 
     /**
      * @ManyToOne(targetEntity="Category", inversedBy="products")
+     *
      * @var Category
      */
     protected $category;
