@@ -47,8 +47,11 @@ class Category
      */
     protected $products;
 
-    public function __construct()
+    public function __construct($categoryData)
     {
+        $this->name = $categoryData['name'];
+        $this->slug = $categoryData['slug'];
+        $this->createdAt = isset($categoryData['createdAt']) ? $categoryData['createdAt'] : new \DateTime();
         $this->products = new ArrayCollection();
     }
 

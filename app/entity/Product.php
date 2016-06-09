@@ -65,7 +65,7 @@ class Product
         $this->name = $productData['name'];
         $this->slug = $productData['slug'];
         $this->price = $productData['price'];
-        $this->createdAt = new \DateTime();
+        $this->createdAt = isset($categoryData['createdAt']) ? $categoryData['createdAt'] : new \DateTime();
     }
 
     public function getCategoryData()

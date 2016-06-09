@@ -12,6 +12,9 @@ $app->post('/products/{slug}', 'App\Action\ProductAction:update');
 $app->delete('/products/{slug}', 'App\Action\ProductAction:remove');
 
 $app->get('/categories[/{slug}]', 'App\Action\CategoryAction:get');
+$app->post('/categories', 'App\Action\CategoryAction:create');
+$app->post('/categories/{slug}', 'App\Action\CategoryAction:update');
+$app->delete('/categories/{slug}', 'App\Action\CategoryAction:remove');
 
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
     /** @var Container $container */

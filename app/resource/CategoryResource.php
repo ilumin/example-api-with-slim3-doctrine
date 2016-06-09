@@ -31,4 +31,66 @@ class CategoryResource extends AbstractResource
 
         return false;
     }
+
+    public function create($categoryData)
+    {
+        try {
+            $category = new Category($categoryData);
+
+            $this->doctrine->persist($category);
+            $this->doctrine->flush();
+            return $category;
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Insert category fail with (' . $e->getMessage() . ')');
+        }
+    }
+
+    public function update($slug, $categoryData)
+    {
+        try {
+            /** @var EntityRepository $categoryEntity */
+            $categoryEntity = $this->doctrine->getRepository('App\Entity\Category');
+
+            /** @var Category $category */
+            $category = $categoryEntity->findOneBy([
+                'slug' => $slug,
+            ]);
+            if (!$category) {
+                throw new \Exception('Category not exist.');
+            }
+
+            $category->name = $categoryData['name'];
+
+            $this->doctrine->persist($category);
+            $this->doctrine->flush();
+            return $category;
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Update category fail with (' . $e->getMessage() . ')');
+        }
+    }
+
+    public function remove($slug)
+    {
+        try {
+            /** @var EntityRepository $categoryEntity */
+            $categoryEntity = $this->doctrine->getRepository('App\Entity\Category');
+
+            /** @var Category $category */
+            $category = $categoryEntity->findOneBy([
+                'slug' => $slug,
+            ]);
+            if (!$category) {
+                throw new \Exception('Category not exist.');
+            }
+
+            $this->doctrine->remove($category);
+            $this->doctrine->flush();
+            return true;
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Remove category fail with (' . $e->getMessage() . ')');
+        }
+    }
 }
