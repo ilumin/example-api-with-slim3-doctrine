@@ -9,7 +9,7 @@ $doctrineConfig = Setup::createAnnotationMetadataConfiguration(
     $databaseConfig['meta']['auto_generate_proxies'],
     $databaseConfig['meta']['proxy_dir'],
     $databaseConfig['meta']['cache'],
-    true
+    false
 );
 
 $entityManager = EntityManager::create($databaseConfig['connection'], $doctrineConfig);

@@ -2,41 +2,47 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @Entity
- * @Table(name="categories")
+ * @ORM\Entity
+ * @ORM\Table(name="categories")
  */
 class Category
 {
     /**
-     * @Id
-     * @GeneratedValue(strategy="IDENTITY")
-     * @Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     *
      * @var int
      */
     public $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
+     *
      * @var string
      */
     public $name;
 
     /**
-     * @Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true)
+     *
      * @var string
      */
     public $slug;
 
     /**
-     * @Column(type="datetime", name="created_at")
+     * @ORM\Column(type="datetime", name="created_at")
+     *
      * @var \DateTime
      */
     public $createdAt;
 
     /**
-     * @OneToMany(targetEntity="Product", mappedBy="category", fetch="EXTRA_LAZY")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category", fetch="EXTRA_LAZY")
+     *
      * @var Product[]
      */
     protected $products;
