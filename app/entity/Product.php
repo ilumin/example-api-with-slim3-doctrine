@@ -1,46 +1,62 @@
 <?php
 namespace App\Entity;
 
+use Gedmo\Mapping\Annotation as GEDMO;
+use Doctrine\ORM\Mapping as ORM;
+
 /**
- * @Entity
- * @Table(name="products")
+ * @ORM\Entity
+ * @ORM\Table(name="products")
  */
 class Product
 {
     /**
-     * @Id
-     * @GeneratedValue(strategy="IDENTITY")
-     * @Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\Column(type="integer")
+     *
      * @var int
      */
     public $id;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
+     *
      * @var string
      */
     public $name;
 
     /**
-     * @Column(type="string", unique=true)
+     * @ORM\Column(type="string", unique=true)
+     *
      * @var string
      */
     public $slug;
 
     /**
-     * @Column(type="float")
+     * @ORM\Column(type="float")
+     *
      * @var float
      */
     public $price;
 
     /**
-     * @Column(type="datetime", name="created_at")
+     * @ORM\Column(type="datetime", name="created_at")
+     *
      * @var \DateTime
      */
     public $createdAt;
 
     /**
-     * @ManyToOne(targetEntity="Category", inversedBy="products")
+     * @ORM\Column(type="datetime", name="deleted_at")
+     *
+     * @var \DateTime
+     */
+    public $deletedAt;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
+     *
      * @var Category
      */
     protected $category;
@@ -58,9 +74,6 @@ class Product
         return $this->category->getData();
     }
 
-    /**
-     * @return array
-     */
     public function getData()
     {
         $productData = get_object_vars($this);
