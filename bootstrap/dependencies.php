@@ -3,6 +3,7 @@
 
 use App\Resource\ProductResource;
 use App\Resource\CategoryResource;
+use App\Resource\TagResource;
 
 $container = $app->getContainer();
 
@@ -27,4 +28,8 @@ $container[App\Action\ProductAction::class] = function ($c) {
 $container[App\Action\CategoryAction::class] = function ($c) {
     $categoryResource = new CategoryResource($c->get('doctrine'));
     return new App\Action\CategoryAction($categoryResource);
+};
+$container[App\Action\TagAction::class] = function ($c) {
+    $tagResource = new TagResource($c->get('doctrine'));
+    return new App\Action\TagAction($tagResource);
 };

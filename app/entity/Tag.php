@@ -56,8 +56,11 @@ class Tag
      */
     protected $products;
 
-    public function __construct()
+    public function __construct($data)
     {
+        $this->name = $data['name'];
+        $this->slug = $data['slug'];
+        $this->createdAt = isset($data['createdAt']) ? $data['createdAt'] : new \DateTime();
         $this->products = new ArrayCollection();
     }
 

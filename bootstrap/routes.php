@@ -16,6 +16,11 @@ $app->post('/categories', 'App\Action\CategoryAction:create');
 $app->post('/categories/{slug}', 'App\Action\CategoryAction:update');
 $app->delete('/categories/{slug}', 'App\Action\CategoryAction:remove');
 
+$app->get('/tags[/{slug}]', 'App\Action\TagAction:get');
+$app->post('/tags', 'App\Action\TagAction:create');
+$app->post('/tags/{slug}', 'App\Action\TagAction:update');
+$app->delete('/tags/{slug}', 'App\Action\TagAction:remove');
+
 $app->get('/product/{id}', function (Request $request, Response $response, array $args) {
     /** @var Container $container */
     $container = $this->getContainer();
