@@ -47,3 +47,26 @@ $container['errorHandler'] = function ($c) {
             ->withJson($data);
     };
 };
+
+$container['notFoundHandler'] = function ($c) {
+    return function (Request $request, Response $response) use ($c) {
+        $data['status'] = 'error';
+        $data['message'] = 'Request not found';
+
+        return $response
+            ->withStatus(404)
+            ->withJson($data);
+    };
+};
+
+$container['notAllowedHandler'] = function ($c) {
+    return function (Request $request, Response $response, $methods) use ($c) {
+        $data['status'] = 'error';
+        $data['message'] = 'Allow only method: ' . implode(', ', $methods);
+
+        return $response
+            ->withStatus(405)
+            ->withHeader('Allow', implode(', ', $methods))
+            ->withJson($data);
+    };
+};
