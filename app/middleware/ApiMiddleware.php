@@ -17,7 +17,7 @@ class ApiMiddleware
     {
         /** @var ResponseInterface $response */
         $response = $next($request, $response);
-        $newResponse = $response->withHeader('content-type', 'application/vnd.api+json');
+        $newResponse = $response->withHeader('content-type', 'application/json');
         return $newResponse;
     }
 }

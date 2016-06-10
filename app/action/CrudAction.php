@@ -3,11 +3,12 @@
 namespace App\Action;
 
 
+use App\AbstractCrud;
 use App\Resource\ResourceInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class CrudAction
+class CrudAction extends AbstractCrud
 {
     public $resource;
 
@@ -20,26 +21,26 @@ class CrudAction
     {
         $slug = isset($args['slug']) ? $args['slug'] : null;
         $result = $this->resource->get($slug);
-        return $response->withJson($result);
+        return $this->responseSuccess($response, $result);
     }
 
     public function create(Request $request, Response $response, $args)
     {
         $result = $this->resource->create($request->getParsedBody());
-        return $response->withJson($result);
+        return $this->responseSuccess($response, $result);
     }
 
     public function update(Request $request, Response $response, $args)
     {
         $slug = isset($args['slug']) ? $args['slug'] : null;
         $result = $this->resource->update($slug, $request->getParsedBody());
-        return $response->withJson($result);
+        return $this->responseSuccess($response, $result);
     }
 
     public function remove(Request $request, Response $response, $args)
     {
         $slug = isset($args['slug']) ? $args['slug'] : null;
         $result = $this->resource->remove($slug);
-        return $response->withJson($result);
+        return $this->responseSuccess($response, $result);
     }
 }
