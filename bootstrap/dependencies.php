@@ -4,6 +4,8 @@
 use App\Resource\ProductResource;
 use App\Resource\CategoryResource;
 use App\Resource\TagResource;
+use Slim\Http\Request;
+use Slim\Http\Response;
 
 $container = $app->getContainer();
 
@@ -32,4 +34,16 @@ $container['CategoryCrudAction'] = function ($c) {
 $container['TagCrudAction'] = function ($c) {
     $tagResource = new TagResource($c->get('doctrine'));
     return new App\Action\CrudAction($tagResource);
+};
+
+$container['errorHandler'] = function ($c) {
+    return function (Request $request, Response $response, \Exception $e) use ($c) {
+        $data['status'] = 'error';
+        $data['message'] = $e->getMessage();
+        $data['trace'] = $e->getTrace();
+
+        return $response
+            ->withStatus(500)
+            ->withJson($data);
+    };
 };
