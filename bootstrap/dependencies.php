@@ -21,15 +21,15 @@ $container['doctrine'] = function ($c) {
     return require __DIR__ . '/../bootstrap/doctrine.php';
 };
 
-$container[App\Action\ProductAction::class] = function ($c) {
+$container['ProductCrudAction'] = function ($c) {
     $productResource = new ProductResource($c->get('doctrine'));
-    return new App\Action\ProductAction($productResource);
+    return new App\Action\CrudAction($productResource);
 };
-$container[App\Action\CategoryAction::class] = function ($c) {
+$container['CategoryCrudAction'] = function ($c) {
     $categoryResource = new CategoryResource($c->get('doctrine'));
-    return new App\Action\CategoryAction($categoryResource);
+    return new App\Action\CrudAction($categoryResource);
 };
-$container[App\Action\TagAction::class] = function ($c) {
+$container['TagCrudAction'] = function ($c) {
     $tagResource = new TagResource($c->get('doctrine'));
-    return new App\Action\TagAction($tagResource);
+    return new App\Action\CrudAction($tagResource);
 };
