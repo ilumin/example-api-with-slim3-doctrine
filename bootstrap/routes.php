@@ -25,6 +25,11 @@ $app->post('/variants',             'VariantCrudAction:create');
 $app->post('/variants/{slug}',      'VariantCrudAction:update');
 $app->delete('/variants/{slug}',    'VariantCrudAction:remove');
 
+$app->get('/cart',                  'CartCrudAction:get');
+$app->post('/cart',                 'CartCrudAction:create');
+$app->put('/cart',                  'CartCrudAction:update');
+$app->delete('/cart',               'CartCrudAction:remove');
+
 $app->get('/', function (Request $request, Response $response, array $args) {
     $this->logger->info("Slim-Skeleton '/' route");
 
