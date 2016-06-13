@@ -1,5 +1,5 @@
 <?php
-namespace App\Resource;
+namespace App\Core;
 
 interface ResourceInterface
 {

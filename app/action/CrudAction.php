@@ -2,9 +2,8 @@
 
 namespace App\Action;
 
-
-use App\AbstractCrud;
-use App\Resource\ResourceInterface;
+use App\Core\AbstractCrud;
+use App\Core\ResourceInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
 

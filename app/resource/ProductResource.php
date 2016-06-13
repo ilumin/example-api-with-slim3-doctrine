@@ -1,7 +1,8 @@
 <?php
 namespace App\Resource;
 
-use App\AbstractResource;
+use App\Core\AbstractResource;
+use App\Core\ResourceInterface;
 use App\Entity\Category;
 use App\Entity\Product;
 
