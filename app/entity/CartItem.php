@@ -80,4 +80,40 @@ class CartItem
      * @var \DateTime
      */
     protected $deletedAt;
+
+    public function __construct(Variant $variant, $quantity)
+    {
+        $this->quantity = $quantity;
+        $this->variant = $variant;
+        $this->name = $variant->name;
+        $this->price = $variant->price;
+        $this->createdAt = new \DateTime();
+
+        $this->updateCartItemData($this->createdAt);
+    }
+
+    public function addQuantity($quantity)
+    {
+        $this->quantity += $quantity;
+
+        $this->updateCartItemData(new \DateTime());
+    }
+
+    public function updateQuantity($quantity)
+    {
+        $this->quantity = $quantity;
+
+        $this->updateCartItemData(new \DateTime());
+    }
+
+    public function updateCartItemData($datetime)
+    {
+        $this->totalPrice = $this->price * $this->quantity;
+        $this->updatedAt = $datetime;
+    }
+
+    public function setCart(Cart $cart)
+    {
+        $this->cart = $cart;
+    }
 }
