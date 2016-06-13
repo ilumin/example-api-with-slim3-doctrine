@@ -8,7 +8,8 @@ class CartResource extends AbstractResource implements ResourceInterface
 {
     public function get($slug = null)
     {
-        // TODO: Implement get() method.
+        $cartRepository = $this->getRepository('App\Entity\Cart');
+        return $cartRepository->findAll();
     }
 
     public function create($data)
