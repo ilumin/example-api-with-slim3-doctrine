@@ -66,8 +66,6 @@ class Variant
         $this->name = $variantData['name'];
         $this->sku = $variantData['sku'];
         $this->price = $variantData['price'];
-
-        $this->setProduct($variantData['product']);
     }
 
     public function setProduct(Product $product)

@@ -21,9 +21,13 @@ $app->post('/tags',                 'TagCrudAction:create');
 $app->post('/tags/{slug}',          'TagCrudAction:update');
 $app->delete('/tags/{slug}',        'TagCrudAction:remove');
 
+$app->post('/variants',             'VariantCrudAction:create');
+$app->post('/variants/{slug}',      'VariantCrudAction:update');
+$app->delete('/variants/{slug}',    'VariantCrudAction:remove');
+
 $app->get('/', function (Request $request, Response $response, array $args) {
     $this->logger->info("Slim-Skeleton '/' route");
-    
+
     $data = array(
         'hello' => 'world',
     );

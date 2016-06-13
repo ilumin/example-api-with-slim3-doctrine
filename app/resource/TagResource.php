@@ -31,7 +31,7 @@ class TagResource extends AbstractResource implements ResourceInterface
     {
         try {
             $tag = new Tag($data);
-            $this->doctrine->persist($category);
+            $this->doctrine->persist($tag);
             $this->doctrine->flush();
             return $tag;
         }

@@ -4,6 +4,7 @@
 use App\Resource\ProductResource;
 use App\Resource\CategoryResource;
 use App\Resource\TagResource;
+use App\Resource\VariantResource;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -34,6 +35,10 @@ $container['CategoryCrudAction'] = function ($c) {
 $container['TagCrudAction'] = function ($c) {
     $tagResource = new TagResource($c->get('doctrine'));
     return new App\Action\CrudAction($tagResource);
+};
+$container['VariantCrudAction'] = function ($c) {
+    $variantResource = new VariantResource($c->get('doctrine'));
+    return new App\Action\CrudAction($variantResource);
 };
 
 $container['errorHandler'] = function ($c) {
