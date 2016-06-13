@@ -36,3 +36,33 @@ We have a lot JSON standard here
 1. JSON API [http://jsonapi.org/]
 1. HAL [http://stateless.co/hal_specification.html]
 
+## Cart API 
+
+POST /cart
+POST DATA
+
+    {
+        quantity: 2,
+        id: 794864229
+    }
+
+GET /cart 
+
+    {
+        status: success,
+        data: {
+            total_price: 15800,
+            item_count: 2,
+            items: [
+                {
+                    id: 1,
+                    title: product-A
+                    price: 12900
+                    variant_id: 2
+                }
+            ]
+        }
+    }
+
+PUT /cart/items/{id}
+DELETE /cart/items/{id}
