@@ -40,7 +40,7 @@ class Tag
      *
      * @var \DateTime
      */
-    public $createdAt;
+    protected $createdAt;
 
     /**
      * @ORM\Column(type="datetime", name="deleted_at", nullable=true)
@@ -83,5 +83,4 @@ class Tag
         $this->products->removeElement($product);
         $product->removeTag($this);
     }
-
 }

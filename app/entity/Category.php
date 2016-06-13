@@ -38,7 +38,7 @@ class Category
      *
      * @var \DateTime
      */
-    public $createdAt;
+    protected $createdAt;
 
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="category", fetch="EXTRA_LAZY")
@@ -72,10 +72,9 @@ class Category
     public function getData()
     {
         return [
-            'id'        => $this->id,
-            'name'      => $this->name,
-            'slug'      => $this->slug,
-            'createdAt' => $this->createdAt,
+            'id'   => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
         ];
     }
 

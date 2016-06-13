@@ -40,28 +40,18 @@ class Product
      * @var float
      */
     public $price;
-
-    /**
-     * @ORM\Column(type="datetime", name="created_at")
-     *
-     * @var \DateTime
-     */
-    public $createdAt;
-
-    /**
-     * @ORM\Column(type="datetime", name="deleted_at", nullable=true)
-     *
-     * @var \DateTime
-     */
-    protected $deletedAt;
-
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
      *
      * @var Category
      */
     protected $category;
-
+    /**
+     * @ORM\OneToMany(targetEntity="Variant", mappedBy="product")
+     *
+     * @var Collection|Variant[]
+     */
+    protected $variants;
     /**
      * @ORM\ManyToMany(targetEntity="Tag", inversedBy="products")
      * @ORM\JoinTable(
@@ -73,6 +63,18 @@ class Product
      * @var Collection|Tag[]
      */
     protected $tags;
+    /**
+     * @ORM\Column(type="datetime", name="created_at")
+     *
+     * @var \DateTime
+     */
+    protected $createdAt;
+    /**
+     * @ORM\Column(type="datetime", name="deleted_at", nullable=true)
+     *
+     * @var \DateTime
+     */
+    protected $deletedAt;
 
     public function __construct($productData)
     {
@@ -81,6 +83,7 @@ class Product
         $this->price = $productData['price'];
         $this->createdAt = isset($categoryData['createdAt']) ? $categoryData['createdAt'] : new \DateTime();
         $this->tags = new ArrayCollection();
+        $this->variants = new ArrayCollection();
     }
 
     public function getCategoryData()
@@ -90,10 +93,15 @@ class Product
 
     public function getData()
     {
-        $productData = get_object_vars($this);
-        $productData['category'] = $this->getCategoryData();
-        $productData['tags'] = $this->tags->toArray();
-        return $productData;
+        return [
+            'id'       => $this->id,
+            'name'     => $this->name,
+            'slug'     => $this->slug,
+            'price'    => $this->price,
+            'category' => $this->category->getData(),
+            'tags'     => $this->tags->first(),
+            'variants' => $this->variants->toArray(),
+        ];
     }
 
     public function setCategory(Category $category)
