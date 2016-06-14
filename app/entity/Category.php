@@ -49,9 +49,9 @@ class Category
 
     public function __construct($categoryData)
     {
-        $this->name = $categoryData['name'];
-        $this->slug = $categoryData['slug'];
-        $this->createdAt = isset($categoryData['createdAt']) ? $categoryData['createdAt'] : new \DateTime();
+        $this->name = array_get($categoryData, 'name');
+        $this->slug = array_get($categoryData, 'slug');
+        $this->createdAt = array_get($categoryData, 'createdAt', new \DateTime());
         $this->products = new ArrayCollection();
     }
 

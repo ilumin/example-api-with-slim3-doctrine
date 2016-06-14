@@ -63,9 +63,9 @@ class Variant
 
     public function __construct($variantData)
     {
-        $this->name = $variantData['name'];
-        $this->sku = $variantData['sku'];
-        $this->price = $variantData['price'];
+        $this->name = array_get($variantData, 'name');
+        $this->sku = array_get($variantData, 'sku');
+        $this->price = array_get($variantData, 'price');
     }
 
     public function setProduct(Product $product)

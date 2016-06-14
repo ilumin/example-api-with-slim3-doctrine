@@ -78,10 +78,10 @@ class Product
 
     public function __construct($productData)
     {
-        $this->name = $productData['name'];
-        $this->slug = $productData['slug'];
-        $this->price = $productData['price'];
-        $this->createdAt = isset($categoryData['createdAt']) ? $categoryData['createdAt'] : new \DateTime();
+        $this->name = array_get($productData, 'name');
+        $this->slug = array_get($productData, 'slug');
+        $this->price = array_get($productData, 'price');
+        $this->createdAt = array_get($productData, 'createdAt', new \DateTime());
         $this->tags = new ArrayCollection();
         $this->variants = new ArrayCollection();
     }

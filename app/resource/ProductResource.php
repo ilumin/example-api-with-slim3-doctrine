@@ -39,8 +39,8 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
         try {
             $product = new Product($productData);
-            $product = $this->setCategory($productData['category_id'], $product);
-            $product = $this->setTags($productData['tags'], $product);
+            $product = $this->setCategory(array_get($productData, 'category_id'), $product);
+            $product = $this->setTags(array_get($productData, 'tags'), $product);
 
             $this->doctrine->persist($product);
             $this->doctrine->flush();
@@ -71,8 +71,8 @@ class ProductResource extends AbstractResource implements ResourceInterface
             $product->name = $productData['name'];
             $product->price = $productData['price'];
 
-            $product = $this->setCategory($productData['category_id'], $product);
-            $product = $this->setTags($productData['tags'], $product);
+            $product = $this->setCategory(array_get($productData, 'category_id'), $product);
+            $product = $this->setTags(array_get($productData, 'tags'), $product);
 
             $this->doctrine->persist($product);
             $this->doctrine->flush();

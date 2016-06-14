@@ -22,10 +22,10 @@ class CartResource extends AbstractResource implements ResourceInterface
                 throw new \Exception('Add item required item\'s id and quantity.');
             }
 
-            $product = $this->getVariant($data['id']);
+            $product = $this->getVariant(array_get($data, 'id'));
 
             $cart = $this->getCurrentCart();
-            $cart->addItem($product, $data['quantity']);
+            $cart->addItem($product, array_get($data, 'quantity'));
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
@@ -50,7 +50,7 @@ class CartResource extends AbstractResource implements ResourceInterface
 
             $variant = $this->getVariant($variant_id);
             $cart = $this->getCurrentCart();
-            $cart->updateItem($variant, $data['quantity']);
+            $cart->updateItem($variant, array_get($data, 'quantity'));
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();

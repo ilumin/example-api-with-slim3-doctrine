@@ -45,7 +45,7 @@ class VariantResource extends AbstractResource implements ResourceInterface
         try {
             $variantRepository = $this->getRepository('App\Entity\Variant');
 
-            /** @var Variant $product */
+            /** @var Variant $variant */
             $variant = $variantRepository->findOneBy([
                 'slug' => $slug,
             ]);

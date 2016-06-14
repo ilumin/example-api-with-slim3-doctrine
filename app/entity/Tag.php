@@ -58,9 +58,9 @@ class Tag
 
     public function __construct($data)
     {
-        $this->name = $data['name'];
-        $this->slug = $data['slug'];
-        $this->createdAt = isset($data['createdAt']) ? $data['createdAt'] : new \DateTime();
+        $this->name = array_get($data, 'name');
+        $this->slug = array_get($data, 'slug');
+        $this->createdAt = array_get($data, 'createdAt', new \DateTime());
         $this->products = new ArrayCollection();
     }
 
