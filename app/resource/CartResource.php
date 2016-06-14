@@ -17,7 +17,7 @@ class CartResource extends AbstractResource implements ResourceInterface
     {
         try {
             if (empty($data)) {
-                throw new \Exception('Required item\'s id and quantity.');
+                throw new \Exception('Add item required item\'s id and quantity.');
             }
 
             $product = $this->getVariant($data['id']);
@@ -39,7 +39,7 @@ class CartResource extends AbstractResource implements ResourceInterface
     {
         try {
             if (empty($data)) {
-                throw new \Exception('Required item\'s id and quantity.');
+                throw new \Exception('Update item required item\'s id and quantity.');
             }
 
             $variant = $this->getVariant($variant_id);

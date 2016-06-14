@@ -128,4 +128,9 @@ class CartItem
     {
         return $this->cart;
     }
+
+    public function isDeleted()
+    {
+        return !empty($this->deletedAt);
+    }
 }

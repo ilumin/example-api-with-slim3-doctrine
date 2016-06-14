@@ -84,20 +84,15 @@ class Cart
 
     public function addItem(Variant $variant, $quantity = 0)
     {
-        /** @var ArrayCollection $cartItems */
-        $cartItems = $this->items->filter(function($cartItem) use ($variant) {
-            return $cartItem->getVariant()->id == $variant->id;
-        });
-        if ($cartItems->count() > 0) {
-            /** @var CartItem $cartItem */
-            $cartItem = $cartItems->first();
-            $cartItem->update($variant, $quantity);
-        }
-        else {
+        /** @var CartItem $cartItem */
+        $cartItem = $this->getItem($variant);
+        if (empty($cartItem)) {
             $cartItem = new CartItem($variant, $quantity);
             $cartItem->setCart($this);
-
             $this->items->add($cartItem);
+        }
+        else {
+            $cartItem->update($variant, $quantity);
         }
 
         $this->updateCartData(new \DateTime());
@@ -107,16 +102,12 @@ class Cart
 
     public function updateItem($variant, $quantity)
     {
-        /** @var ArrayCollection $cartItems */
-        $cartItems = $this->items->filter(function($cartItem) use ($variant) {
-            return $cartItem->getVariant()->id == $variant->id;
-        });
-        if ($cartItems->count()<=0) {
+        /** @var CartItem $cartItem */
+        $cartItem = $this->getItem($variant);
+        if (empty($cartItem)) {
             throw new \Exception('Item not exists in cart.');
         }
 
-        /** @var CartItem $cartItem */
-        $cartItem = $cartItems->first();
         $cartItem->update($variant, $quantity, false);
 
         $this->updateCartData(new \DateTime());
@@ -126,16 +117,11 @@ class Cart
 
     public function removeItem($variant)
     {
-        /** @var ArrayCollection $cartItems */
-        $cartItems = $this->items->filter(function($cartItem) use ($variant) {
-            return $cartItem->getVariant()->id == $variant->id;
-        });
-        if ($cartItems->count()<=0) {
+        /** @var CartItem $cartItem */
+        $cartItem = $this->getItem($variant);
+        if (empty($cartItem)) {
             throw new \Exception('Item not exists in cart.');
         }
-
-        /** @var CartItem $cartItem */
-        $cartItem = $cartItems->first();
         $cartItem->remove();
 
         $this->updateCartData(new \DateTime());
@@ -148,7 +134,7 @@ class Cart
         $totalPrice = 0;
         $itemCount = 0;
 
-        foreach ($this->items as $cartItem) {
+        foreach ($this->fetchItems() as $cartItem) {
             $totalPrice += $cartItem->totalPrice;
             $itemCount += $cartItem->quantity;
         }
@@ -163,7 +149,24 @@ class Cart
         return [
             'total_price' => $this->totalPrice,
             'item_count' => $this->itemCount,
-            'items' => $this->items->toArray(),
+            'items' => $this->fetchItems(),
         ];
+    }
+
+    public function fetchItems()
+    {
+        return $this->items->filter(function($cartItem) {
+            return !$cartItem->isDeleted();
+        })->toArray();
+    }
+
+    public function getItem($variant)
+    {
+        /** @var ArrayCollection $cartItems */
+        $cartItems = $this->items->filter(function($cartItem) use ($variant) {
+            return $cartItem->getVariant()->id == $variant->id && !$cartItem->isDeleted();
+        });
+
+        return $cartItems->first();
     }
 }
