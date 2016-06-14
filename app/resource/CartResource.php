@@ -9,8 +9,8 @@ class CartResource extends AbstractResource implements ResourceInterface
 {
     public function get($slug = null)
     {
-        $cartRepository = $this->getRepository('App\Entity\Cart');
-        return $cartRepository->findAll();
+        $cart = $this->getCurrentCart();
+        return $cart->getData();
     }
 
     public function create($data)
@@ -20,7 +20,7 @@ class CartResource extends AbstractResource implements ResourceInterface
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
 
-            return $cart;
+            return $cart->getData();
         }
         catch (\Exception $e) {
             throw new \Exception('Cannot add item to cart (' . $e->getMessage() . ').');
@@ -43,8 +43,7 @@ class CartResource extends AbstractResource implements ResourceInterface
             throw new \Exception('Required item\'s id and quantity.');
         }
 
-        $cartRepository = $this->getRepository('App\Entity\Cart');
-        $cart = $this->getCurrentCart($cartRepository);
+        $cart = $this->getCurrentCart();
 
         $product = $this->getVariant($data['id']);
         $cart->addItem($product, $data['quantity']);
@@ -52,10 +51,13 @@ class CartResource extends AbstractResource implements ResourceInterface
         return $cart;
     }
 
-    protected function getCurrentCart($cartRepository)
+    protected function getCurrentCart()
     {
+        $cartRepository = $this->getRepository('App\Entity\Cart');
+        /** @var Cart $cart */
         $cart = $cartRepository->findOneBy([
             'deletedAt' => null,
+            'status' => Cart::STATUS_DRAFT,
         ]);
 
         if (!$cart) {

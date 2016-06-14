@@ -12,6 +12,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Cart
 {
+    const STATUS_DRAFT      = 'draft';
+    const STATUS_PUBLISHED  = 'published';
+    const STATUS_DELETED    = 'deleted';
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -34,6 +38,12 @@ class Cart
      * @var int
      */
     public $itemCount;
+
+    /**
+     * @ORM\Column(type="string", columnDefinition="ENUM('draft', 'deleted', 'published')")
+     * @var string
+     */
+    public $status = 'draft';
 
     /**
      * @ORM\OneToMany(targetEntity="CartItem", mappedBy="cart", cascade="persist")
@@ -108,5 +118,14 @@ class Cart
         $this->totalPrice = $totalPrice;
         $this->itemCount = $itemCount;
         $this->updatedAt = $datetime;
+    }
+
+    public function getData()
+    {
+        return [
+            'total_price' => $this->totalPrice,
+            'item_count' => $this->itemCount,
+            'items' => $this->items->toArray(),
+        ];
     }
 }

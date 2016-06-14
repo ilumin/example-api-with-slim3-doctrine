@@ -47,18 +47,18 @@ class CartItem
     public $quantity;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="items")
-     *
-     * @var Cart
-     */
-    public $cart;
-
-    /**
      * @ORM\ManyToOne(targetEntity="Variant")
      *
      * @var Variant
      */
-    public $variant;
+    protected $variant;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Cart", inversedBy="items")
+     *
+     * @var Cart
+     */
+    protected $cart;
 
     /**
      * @ORM\Column(type="datetime", name="created_at")
