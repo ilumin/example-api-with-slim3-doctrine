@@ -33,9 +33,11 @@ class TagResource extends AbstractResource implements ResourceInterface
             $tag = new Tag($data);
             $this->doctrine->persist($tag);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $tag;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Insert tag fail with (' . $e->getMessage() . ')');
         }
     }
@@ -57,9 +59,11 @@ class TagResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($tag);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $tag;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Update tag fail with (' . $e->getMessage() . ')');
         }
     }
@@ -79,9 +83,11 @@ class TagResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->remove($tag);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return true;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Remove tag fail with (' . $e->getMessage() . ')');
         }
     }

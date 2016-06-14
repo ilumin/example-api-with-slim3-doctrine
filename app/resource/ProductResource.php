@@ -42,9 +42,11 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($product);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $product;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Insert product fail with (' . $e->getMessage() . ')');
         }
     }
@@ -70,9 +72,11 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($product);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $product;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Update product fail with (' . $e->getMessage() . ')');
         }
     }
@@ -92,9 +96,11 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->remove($product);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return true;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Remove product fail with (' . $e->getMessage() . ')');
         }
     }

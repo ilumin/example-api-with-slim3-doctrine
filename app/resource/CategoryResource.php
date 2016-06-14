@@ -38,9 +38,11 @@ class CategoryResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($category);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $category;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Insert category fail with (' . $e->getMessage() . ')');
         }
     }
@@ -62,9 +64,11 @@ class CategoryResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($category);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $category;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Update category fail with (' . $e->getMessage() . ')');
         }
     }
@@ -84,9 +88,11 @@ class CategoryResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->remove($category);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return true;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Remove category fail with (' . $e->getMessage() . ')');
         }
     }

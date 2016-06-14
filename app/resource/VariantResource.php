@@ -27,9 +27,11 @@ class VariantResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($variant);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $variant;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Insert variant fail with (' . $e->getMessage() . ')');
         }
     }
@@ -53,9 +55,11 @@ class VariantResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($variant);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return $product;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Update variant fail with (' . $e->getMessage() . ')');
         }
     }
@@ -75,9 +79,11 @@ class VariantResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->remove($variant);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
             return true;
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Remove product fail with (' . $e->getMessage() . ')');
         }
     }

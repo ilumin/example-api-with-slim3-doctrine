@@ -27,10 +27,12 @@ class CartResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
 
             return $cart->getData();
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Cannot add item to cart (' . $e->getMessage() . ').');
         }
     }
@@ -48,10 +50,12 @@ class CartResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
 
             return $cart->getData();
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Cannot update item on cart (' . $e->getMessage() . ').');
         }
     }
@@ -65,10 +69,12 @@ class CartResource extends AbstractResource implements ResourceInterface
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
 
             return $cart->getData();
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Cannot remove item from cart (' . $e->getMessage() . ').');
         }
     }

@@ -25,10 +25,12 @@ class OrderResource extends AbstractResource implements ResourceInterface
             $this->doctrine->persist($cart);
             $this->doctrine->persist($order);
             $this->doctrine->flush();
+            $this->doctrine->getConnection()->commit();
 
             return $order->getData();
         }
         catch (\Exception $e) {
+            $this->doctrine->getConnection()->rollBack();
             throw new \Exception('Cannot create new order (' . $e->getMessage() . ').');
         }
     }
