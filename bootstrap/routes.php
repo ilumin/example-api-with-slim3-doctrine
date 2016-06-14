@@ -30,6 +30,8 @@ $app->post('/cart',                 'CartCrudAction:create');
 $app->put('/cart/item/{slug}',      'CartCrudAction:update');
 $app->delete('/cart/item/{slug}',   'CartCrudAction:remove');
 
+$app->post('/order',                'OrderAction:create');
+
 $app->get('/', function (Request $request, Response $response, array $args) {
     $this->logger->info("Slim-Skeleton '/' route");
 

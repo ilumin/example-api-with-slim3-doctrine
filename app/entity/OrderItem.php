@@ -80,4 +80,21 @@ class OrderItem
      * @var \DateTime
      */
     protected $deletedAt;
+
+    public function __construct(Variant $variant, $quantity)
+    {
+        $this->quantity = $quantity;
+        $this->variant = $variant;
+        $this->name = $variant->name;
+        $this->price = $variant->price;
+        $this->createdAt = new \DateTime();
+
+        $this->updateCartItemData($this->createdAt);
+    }
+
+    private function updateCartItemData($datetime)
+    {
+        $this->totalPrice = $this->price * $this->quantity;
+        $this->updatedAt = $datetime;
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -79,4 +80,57 @@ class Order
      * @var \DateTime
      */
     protected $deletedAt;
+
+    public function __construct(Cart $cart)
+    {
+        $cartItems = $cart->fetchItems();
+        if (empty($cartItems)) {
+            throw new \Exception('Cart cannot empty on create order.');
+        }
+
+        $currentDatetime = new \DateTime();
+        $this->items = new ArrayCollection();
+        $this->cart = $cart;
+
+        foreach ($cartItems as $cartItem) {
+            $variant = $cartItem->getVariant();
+            $this->addItem($variant, $cartItem->quantity);
+        }
+
+        $this->createdAt = $currentDatetime;
+
+        $this->updateData($currentDatetime);
+    }
+
+    public function getData()
+    {
+        return [
+            'id' => $this->id,
+            'total_price' => $this->totalPrice,
+            'item_count' => $this->itemCount,
+            'cart_id' => $this->cart->id,
+            'items' => $this->items->toArray(),
+        ];
+    }
+
+    private function updateData($datetime)
+    {
+        $totalPrice = 0;
+        $itemCount = 0;
+
+        foreach ($this->items as $orderItem) {
+            $totalPrice += $orderItem->totalPrice;
+            $itemCount += $orderItem->quantity;
+        }
+
+        $this->totalPrice = $totalPrice;
+        $this->itemCount = $itemCount;
+        $this->updatedAt = $datetime;
+    }
+
+    private function addItem($variant, $quantity)
+    {
+        $orderItem = new OrderItem($variant, $quantity);
+        $this->items->add($orderItem);
+    }
 }

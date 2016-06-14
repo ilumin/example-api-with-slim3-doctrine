@@ -153,6 +153,9 @@ class Cart
         ];
     }
 
+    /**
+     * @return CartItem[]
+     */
     public function fetchItems()
     {
         return $this->items->filter(function($cartItem) {
@@ -168,5 +171,10 @@ class Cart
         });
 
         return $cartItems->first();
+    }
+
+    public function markPublished()
+    {
+        $this->status = self::STATUS_PUBLISHED;
     }
 }

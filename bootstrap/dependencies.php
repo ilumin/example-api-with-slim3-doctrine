@@ -2,6 +2,7 @@
 // DIC configuration
 
 use App\Resource\CartResource;
+use App\Resource\OrderResource;
 use App\Resource\ProductResource;
 use App\Resource\CategoryResource;
 use App\Resource\TagResource;
@@ -44,6 +45,10 @@ $container['VariantCrudAction'] = function ($c) {
 $container['CartCrudAction'] = function ($c) {
     $cartResource = new CartResource($c->get('doctrine'));
     return new App\Action\CrudAction($cartResource);
+};
+$container['OrderAction'] = function ($c) {
+    $orderResource = new OrderResource($c->get('doctrine'));
+    return new App\Action\CrudAction($orderResource);
 };
 
 $container['errorHandler'] = function ($c) {
