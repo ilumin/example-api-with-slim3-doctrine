@@ -8,17 +8,17 @@ use Slim\Http\Response;
 
 $app->get('/products[/{slug}]',     'ProductCrudAction:get');
 $app->post('/products',             'ProductCrudAction:create');
-$app->post('/products/{slug}',      'ProductCrudAction:update');
+$app->put('/products/{slug}',       'ProductCrudAction:update');
 $app->delete('/products/{slug}',    'ProductCrudAction:remove');
 
 $app->get('/categories[/{slug}]',   'CategoryCrudAction:get');
 $app->post('/categories',           'CategoryCrudAction:create');
-$app->post('/categories/{slug}',    'CategoryCrudAction:update');
+$app->put('/categories/{slug}',     'CategoryCrudAction:update');
 $app->delete('/categories/{slug}',  'CategoryCrudAction:remove');
 
 $app->get('/tags[/{slug}]',         'TagCrudAction:get');
 $app->post('/tags',                 'TagCrudAction:create');
-$app->post('/tags/{slug}',          'TagCrudAction:update');
+$app->put('/tags/{slug}',           'TagCrudAction:update');
 $app->delete('/tags/{slug}',        'TagCrudAction:remove');
 
 $app->post('/variants',             'VariantCrudAction:create');
