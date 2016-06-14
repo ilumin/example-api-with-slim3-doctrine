@@ -35,16 +35,16 @@ class CartResource extends AbstractResource implements ResourceInterface
         }
     }
 
-    public function update($slug = null, $data)
+    public function update($variant_id = null, $data)
     {
         try {
             if (empty($data)) {
                 throw new \Exception('Required item\'s id and quantity.');
             }
 
-            $product = $this->getVariant($data['id']);
+            $variant = $this->getVariant($variant_id);
             $cart = $this->getCurrentCart();
-            $cart->updateItem($product, $data['quantity']);
+            $cart->updateItem($variant, $data['quantity']);
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
@@ -56,9 +56,21 @@ class CartResource extends AbstractResource implements ResourceInterface
         }
     }
 
-    public function remove($slug)
+    public function remove($variant_id = null)
     {
-        // TODO: Implement remove() method.
+        try {
+            $variant = $this->getVariant($variant_id);
+            $cart = $this->getCurrentCart();
+            $cart->removeItem($variant);
+
+            $this->doctrine->persist($cart);
+            $this->doctrine->flush();
+
+            return $cart->getData();
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Cannot remove item from cart (' . $e->getMessage() . ').');
+        }
     }
 
     protected function getCurrentCart()

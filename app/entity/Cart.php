@@ -115,8 +115,28 @@ class Cart
             throw new \Exception('Item not exists in cart.');
         }
 
+        /** @var CartItem $cartItem */
         $cartItem = $cartItems->first();
         $cartItem->update($variant, $quantity, false);
+
+        $this->updateCartData(new \DateTime());
+
+        return $this;
+    }
+
+    public function removeItem($variant)
+    {
+        /** @var ArrayCollection $cartItems */
+        $cartItems = $this->items->filter(function($cartItem) use ($variant) {
+            return $cartItem->getVariant()->id == $variant->id;
+        });
+        if ($cartItems->count()<=0) {
+            throw new \Exception('Item not exists in cart.');
+        }
+
+        /** @var CartItem $cartItem */
+        $cartItem = $cartItems->first();
+        $cartItem->remove();
 
         $this->updateCartData(new \DateTime());
 

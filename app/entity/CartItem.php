@@ -102,6 +102,12 @@ class CartItem
         $this->updateCartItemData(new \DateTime());
     }
 
+    public function remove()
+    {
+        $this->deletedAt = new \DateTime();
+        $this->updateCartItemData($this->deletedAt);
+    }
+
     public function updateCartItemData($datetime)
     {
         $this->totalPrice = $this->price * $this->quantity;
