@@ -4,3 +4,6 @@
 /cache/*
 # IDE
 .idea
+
+# Build 
+/build

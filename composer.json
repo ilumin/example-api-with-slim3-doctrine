@@ -22,6 +22,7 @@
         "slim/php-view": "^2.0",
         "monolog/monolog": "^1.17",
         "doctrine/orm": "^2.5",
-        "gedmo/doctrine-extensions": "^2.4"
+        "gedmo/doctrine-extensions": "^2.4",
+        "illuminate/support": "^5.2"
     }
 }
