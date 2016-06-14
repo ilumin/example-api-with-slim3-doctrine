@@ -86,7 +86,7 @@ class Cart
     {
         /** @var ArrayCollection $cartItems */
         $cartItems = $this->items->filter(function($cartItem) use ($variant) {
-            return $cartItem->variant->id == $variant->id;
+            return $cartItem->getVariant()->id == $variant->id;
         });
         if ($cartItems->count() > 0) {
             /** @var CartItem $cartItem */

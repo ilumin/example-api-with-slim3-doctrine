@@ -116,4 +116,14 @@ class CartItem
     {
         $this->cart = $cart;
     }
+
+    public function getVariant()
+    {
+        return $this->variant;
+    }
+
+    public function getCart()
+    {
+        return $this->cart;
+    }
 }
