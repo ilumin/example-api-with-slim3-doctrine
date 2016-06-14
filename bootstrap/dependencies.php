@@ -22,8 +22,8 @@ $container['logger'] = function ($c) {
 };
 
 $container['doctrine'] = function ($c) {
-    //$databaseConfig = require __DIR__ . '/../config/database.php';
-    return require __DIR__ . '/../bootstrap/doctrine.php';
+    $entityManager = require __DIR__ . '/../bootstrap/doctrine.php';
+    return $entityManager;
 };
 
 $container['ProductCrudAction'] = function ($c) {
