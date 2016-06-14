@@ -33,6 +33,8 @@ class CategoryResource extends AbstractResource implements ResourceInterface
 
     public function create($categoryData)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $category = new Category($categoryData);
 
@@ -49,6 +51,8 @@ class CategoryResource extends AbstractResource implements ResourceInterface
 
     public function update($slug, $categoryData)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $categoryRepository = $this->getRepository('App\Entity\Category');
 
@@ -75,6 +79,8 @@ class CategoryResource extends AbstractResource implements ResourceInterface
 
     public function remove($slug)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $categoryRepository = $this->getRepository('App\Entity\Category');
 

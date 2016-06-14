@@ -29,6 +29,8 @@ class TagResource extends AbstractResource implements ResourceInterface
 
     public function create($data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $tag = new Tag($data);
             $this->doctrine->persist($tag);
@@ -44,6 +46,8 @@ class TagResource extends AbstractResource implements ResourceInterface
 
     public function update($slug, $data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $tagRepository = $this->getRepository('App\Entity\Tag');
 
@@ -70,6 +74,8 @@ class TagResource extends AbstractResource implements ResourceInterface
 
     public function remove($slug)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $tagRepository = $this->getRepository('App\Entity\Tag');
 

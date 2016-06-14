@@ -21,6 +21,8 @@ class VariantResource extends AbstractResource implements ResourceInterface
 
     public function create($data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $variant = new Variant($data);
             $variant = $this->setProduct($data['product_id'], $variant);
@@ -38,6 +40,8 @@ class VariantResource extends AbstractResource implements ResourceInterface
 
     public function update($slug, $data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $variantRepository = $this->getRepository('App\Entity\Variant');
 
@@ -66,6 +70,8 @@ class VariantResource extends AbstractResource implements ResourceInterface
 
     public function remove($slug)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $variantRepository = $this->getRepository('App\Entity\Variant');
 

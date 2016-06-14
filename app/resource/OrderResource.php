@@ -16,6 +16,8 @@ class OrderResource extends AbstractResource implements ResourceInterface
 
     public function create($data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $cart = $this->getCart();
             $order = new Order($cart);

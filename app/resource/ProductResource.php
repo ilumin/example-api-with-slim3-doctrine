@@ -35,6 +35,8 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
     public function create($productData)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $product = new Product($productData);
             $product = $this->setCategory($productData['category_id'], $product);
@@ -53,6 +55,8 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
     public function update($slug, $productData)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $productRepository = $this->getRepository('App\Entity\Product');
 
@@ -83,6 +87,8 @@ class ProductResource extends AbstractResource implements ResourceInterface
 
     public function remove($slug)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $productRepository = $this->getRepository('App\Entity\Product');
 

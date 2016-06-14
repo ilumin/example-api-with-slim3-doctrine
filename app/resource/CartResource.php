@@ -15,6 +15,8 @@ class CartResource extends AbstractResource implements ResourceInterface
 
     public function create($data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             if (empty($data)) {
                 throw new \Exception('Add item required item\'s id and quantity.');
@@ -39,6 +41,8 @@ class CartResource extends AbstractResource implements ResourceInterface
 
     public function update($variant_id = null, $data)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             if (empty($data)) {
                 throw new \Exception('Update item required item\'s id and quantity.');
@@ -62,6 +66,8 @@ class CartResource extends AbstractResource implements ResourceInterface
 
     public function remove($variant_id = null)
     {
+        $this->doctrine->getConnection()->beginTransaction();
+
         try {
             $variant = $this->getVariant($variant_id);
             $cart = $this->getCurrentCart();
