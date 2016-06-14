@@ -16,7 +16,15 @@ class CartResource extends AbstractResource implements ResourceInterface
     public function create($data)
     {
         try {
-            $cart = $this->addItem($data);
+            if (empty($data)) {
+                throw new \Exception('Required item\'s id and quantity.');
+            }
+
+            $product = $this->getVariant($data['id']);
+
+            $cart = $this->getCurrentCart();
+            $cart->addItem($product, $data['quantity']);
+
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
 
@@ -27,28 +35,30 @@ class CartResource extends AbstractResource implements ResourceInterface
         }
     }
 
-    public function update($slug, $data)
+    public function update($slug = null, $data)
     {
-        // TODO: Implement update() method.
+        try {
+            if (empty($data)) {
+                throw new \Exception('Required item\'s id and quantity.');
+            }
+
+            $product = $this->getVariant($data['id']);
+            $cart = $this->getCurrentCart();
+            $cart->updateItem($product, $data['quantity']);
+
+            $this->doctrine->persist($cart);
+            $this->doctrine->flush();
+
+            return $cart->getData();
+        }
+        catch (\Exception $e) {
+            throw new \Exception('Cannot update item on cart (' . $e->getMessage() . ').');
+        }
     }
 
     public function remove($slug)
     {
         // TODO: Implement remove() method.
-    }
-
-    protected function addItem($data)
-    {
-        if (empty($data)) {
-            throw new \Exception('Required item\'s id and quantity.');
-        }
-
-        $cart = $this->getCurrentCart();
-
-        $product = $this->getVariant($data['id']);
-        $cart->addItem($product, $data['quantity']);
-
-        return $cart;
     }
 
     protected function getCurrentCart()

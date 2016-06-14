@@ -92,16 +92,12 @@ class CartItem
         $this->updateCartItemData($this->createdAt);
     }
 
-    public function addQuantity($quantity)
+    public function update(Variant $variant, $quantity, $addition = true)
     {
-        $this->quantity += $quantity;
-
-        $this->updateCartItemData(new \DateTime());
-    }
-
-    public function updateQuantity($quantity)
-    {
-        $this->quantity = $quantity;
+        $this->price = $variant->price;
+        $this->quantity = $addition
+            ? $this->quantity + $quantity
+            : $quantity;
 
         $this->updateCartItemData(new \DateTime());
     }

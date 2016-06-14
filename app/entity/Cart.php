@@ -91,7 +91,7 @@ class Cart
         if ($cartItems->count() > 0) {
             /** @var CartItem $cartItem */
             $cartItem = $cartItems->first();
-            $cartItem->addQuantity($cartItem->quantity);
+            $cartItem->update($variant, $quantity);
         }
         else {
             $cartItem = new CartItem($variant, $quantity);
@@ -99,6 +99,24 @@ class Cart
 
             $this->items->add($cartItem);
         }
+
+        $this->updateCartData(new \DateTime());
+
+        return $this;
+    }
+
+    public function updateItem($variant, $quantity)
+    {
+        /** @var ArrayCollection $cartItems */
+        $cartItems = $this->items->filter(function($cartItem) use ($variant) {
+            return $cartItem->getVariant()->id == $variant->id;
+        });
+        if ($cartItems->count()<=0) {
+            throw new \Exception('Item not exists in cart.');
+        }
+
+        $cartItem = $cartItems->first();
+        $cartItem->update($variant, $quantity, false);
 
         $this->updateCartData(new \DateTime());
 
