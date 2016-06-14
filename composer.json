@@ -24,5 +24,8 @@
         "doctrine/orm": "^2.5",
         "gedmo/doctrine-extensions": "^2.4",
         "illuminate/support": "^5.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8"
     }
 }
