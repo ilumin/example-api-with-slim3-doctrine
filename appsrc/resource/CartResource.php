@@ -4,6 +4,7 @@ namespace App\Resource;
 use App\Core\AbstractResource;
 use App\Core\ResourceInterface;
 use App\Entity\Cart;
+use App\Entity\Variant;
 
 class CartResource extends AbstractResource implements ResourceInterface
 {
@@ -22,10 +23,11 @@ class CartResource extends AbstractResource implements ResourceInterface
                 throw new \Exception('Add item required item\'s id and quantity.');
             }
 
-            $product = $this->getVariant(array_get($data, 'id'));
+            /** @var Variant $variant */
+            $variant = $this->getVariant(array_get($data, 'id'));
 
             $cart = $this->getCurrentCart();
-            $cart->addItem($product, array_get($data, 'quantity'));
+            $cart->addItem($variant, array_get($data, 'quantity'));
 
             $this->doctrine->persist($cart);
             $this->doctrine->flush();
