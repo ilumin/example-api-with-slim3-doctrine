@@ -66,3 +66,13 @@ GET /cart
 
 PUT /cart/items/{id}
 DELETE /cart/items/{id}
+
+## Codeception 
+    
+    composer require codeception/codeception 
+    ./vendor/bin/codecept bootstrap
+    ./vendor/bin/codecept generate:cept acceptance ProductApi
+    ./vendor/bin/codecept run 
+    ./vendor/bin/codecept generate:test unit CartResource
+    ./vendor/bin/codecept run unit 
+    ./vendor/bin/codecept run unit --coverage --coverage-html build/coverage 
