@@ -9,22 +9,9 @@
     </testsuites>
 
     <filter>
-        <whitelist addUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">/app</directory>
-            <exclude>
-                <directory>/app/vendor</directory>
-                <directory>/app/tests</directory>
-                <directory>/tmp</directory>
-            </exclude>
+        <whitelist>
+            <directory suffix=".php">app</directory>
         </whitelist>
-        <!--<whitelist>-->
-            <!--<directory suffix=".php">/app</directory>-->
-            <!--<exclude>-->
-                <!--<directory>/app/vendor</directory>-->
-                <!--<directory>/app/tests</directory>-->
-                <!--<directory>/tmp</directory>-->
-            <!--</exclude>-->
-        <!--</whitelist>-->
     </filter>
 
     <logging>
