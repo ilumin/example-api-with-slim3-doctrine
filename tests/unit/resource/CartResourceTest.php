@@ -1,11 +1,15 @@
 <?php
 
+namespace Test\Unit\Resource;
+
 use App\Entity\Cart;
 use App\Entity\Variant;
 use App\Resource\CartResource;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Mockery;
 use Mockery\MockInterface;
+use PHPUnit_Framework_TestCase;
 
 class CartResourceTest extends PHPUnit_Framework_TestCase
 {

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit
+    bootstrap="tests/bootstrap.php">
+
+    <testsuites>
+        <testsuite name="Unit test">
+            <directory suffix="Test.php">tests/unit</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist addUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">/app</directory>
+            <exclude>
+                <directory>/app/vendor</directory>
+                <directory>/app/tests</directory>
+                <directory>/tmp</directory>
+            </exclude>
+        </whitelist>
+        <!--<whitelist>-->
+            <!--<directory suffix=".php">/app</directory>-->
+            <!--<exclude>-->
+                <!--<directory>/app/vendor</directory>-->
+                <!--<directory>/app/tests</directory>-->
+                <!--<directory>/tmp</directory>-->
+            <!--</exclude>-->
+        <!--</whitelist>-->
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="build/coverage"/>
+        <log type="coverage-clover" target="build/logs/clover.xml"/>
+        <log type="coverage-crap4j" target="build/logs/crap4j.xml"/>
+        <log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>
+    </logging>
+
+</phpunit>

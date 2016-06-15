@@ -1,34 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    verbose="true"
-    stopOnError="false"
-    stopOnFailure="false"
-    stopOnIncomplete="false"
-    stopOnSkipped="false"
-    convertErrorsToExceptions="true"
-    convertNoticesToExceptions="true"
-    convertWarningsToExceptions="true"
-    colors="true"
-    forceCoversAnnotation="false"
-    processIsolation="false"
     bootstrap="tests/bootstrap.php">
 
     <testsuites>
         <testsuite name="Unit test">
-            <directory>./tests/unit</directory>
+            <directory suffix="Test.php">tests/unit</directory>
         </testsuite>
     </testsuites>
-
-    <filter>
-        <whitelist>
-            <directory suffix=".php">./app</directory>
-        </whitelist>
-    </filter>
-
-    <!--<logging>-->
-        <!--<log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>-->
-        <!--<log type="coverage-clover" target="build/logs/clover.xml"/>-->
-        <!--<log type="junit" target="build/logs/junit.xml" logIncompleteSkipped="false"/>-->
-    <!--</logging>-->
 
 </phpunit>
