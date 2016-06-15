@@ -18,16 +18,16 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
      */
     public $doctrine;
 
-    protected function mockTransaction($option = [])
+    protected function mockTransaction($option)
     {
         $connection = Mockery::mock('Doctrine\DBAL\Connection');
         $connection->shouldReceive('beginTransaction');
 
-        if (in_array('commit', $option)) {
+        if ($option == 'commit') {
             $connection->shouldReceive('commit');
         }
 
-        if (in_array('rollback', $option)) {
+        if ($option == 'rollback') {
             $connection->shouldReceive('rollBack');
         }
 
@@ -127,9 +127,7 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
      */
     public function testCreateThrowOnEmptyData()
     {
-        $this->mockTransaction([
-            'rollback',
-        ]);
+        $this->mockTransaction('rollback');
 
         $data = [];
         $cart = new CartResource($this->doctrine);
@@ -138,18 +136,13 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
 
     public function testAddItemToEmptyCart()
     {
-        $this->mockTransaction([
-            'commit',
-        ]);
-
         $variant_id = 1;
-        $mockVariant = new Variant([
+        $variantEntity = new Variant([
             'name'  => 'dummy',
             'sku'   => '100',
             'price' => 100,
         ]);
-
-        $mockCart = new Cart();
+        $cartEntity = null;
 
         $expected = [
             'total_price' => 100,
@@ -158,8 +151,9 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
             'item_quantity' => 1,
         ];
 
-        $this->mockGetVariant($variant_id, $mockVariant);
-        $this->mockGetCart($mockCart);
+        $this->mockTransaction('commit');
+        $this->mockGetVariant($variant_id, $variantEntity);
+        $this->mockGetCart($cartEntity);
         $this->mockSaveData();
 
         $data = [
@@ -174,5 +168,96 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
         $this->assertSame( $expected['item_count'], $result['item_count'] );
         $this->assertSame( $expected['item_total_price'], $cartItem->totalPrice );
         $this->assertSame( $expected['item_quantity'], $cartItem->quantity );
+    }
+
+    public function testAddSameItemToExistsCart()
+    {
+        $variant_id = 1;
+        $variantEntity = new Variant([
+            'name'  => 'dummy',
+            'sku'   => '100',
+            'price' => 100,
+        ]);
+
+        $cartEntity = new Cart();
+        $cartEntity->addItem($variantEntity, 1);
+
+        $expected = [
+            'total_price' => 200,
+            'item_count' => 2,
+            'item_total_price' => 200,
+            'item_quantity' => 2,
+        ];
+
+        $this->mockTransaction('commit');
+        $this->mockGetVariant($variant_id, $variantEntity);
+        $this->mockGetCart($cartEntity);
+        $this->mockSaveData();
+
+        $data = [
+            'id' => 1,
+            'quantity' => 1,
+        ];
+        $cart = new CartResource($this->doctrine);
+        $result = $cart->create($data);
+
+        $cartItem = array_pop($result['items']);
+        $this->assertSame( $expected['total_price'], $result['total_price'] );
+        $this->assertSame( $expected['item_count'], $result['item_count'] );
+        $this->assertSame( $expected['item_total_price'], $cartItem->totalPrice );
+        $this->assertSame( $expected['item_quantity'], $cartItem->quantity );
+    }
+
+    public function testAddDifferenceItemToExistsCart()
+    {
+        $variantEntityA = new Variant([
+            'name'  => 'dummy',
+            'sku'   => '100',
+            'price' => 200,
+        ]);
+        $variantEntityA->id = 1;
+
+        $variantEntityB = new Variant([
+            'name'  => 'dummy',
+            'sku'   => '100',
+            'price' => 300,
+        ]);
+        $variantEntityB->id = 2;
+
+        $cartEntity = new Cart();
+        $cartEntity->addItem($variantEntityA, 1);
+
+        $expected = [
+            'total_price' => 800,
+            'item_count' => 3,
+            'itemA_total_price' => 200,
+            'itemA_quantity' => 1,
+            'itemB_total_price' => 600,
+            'itemB_quantity' => 2,
+        ];
+
+        $this->mockTransaction('commit');
+        $variant_id = 2;
+        $this->mockGetVariant($variant_id, $variantEntityB);
+        $this->mockGetCart($cartEntity);
+        $this->mockSaveData();
+
+        $data = [
+            'id' => 2,
+            'quantity' => 2,
+        ];
+        $cart = new CartResource($this->doctrine);
+        $result = $cart->create($data);
+
+        $this->assertSame( $expected['total_price'], $result['total_price'] );
+        $this->assertSame( $expected['item_count'], $result['item_count'] );
+
+        $cartItem = array_pop($result['items']);
+        $this->assertSame( $expected['itemB_total_price'], $cartItem->totalPrice );
+        $this->assertSame( $expected['itemB_quantity'], $cartItem->quantity );
+
+        $cartItem = array_pop($result['items']);
+        $this->assertSame( $expected['itemA_total_price'], $cartItem->totalPrice );
+        $this->assertSame( $expected['itemA_quantity'], $cartItem->quantity );
     }
 }
