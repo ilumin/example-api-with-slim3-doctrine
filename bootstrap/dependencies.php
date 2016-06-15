@@ -22,7 +22,7 @@ $container['logger'] = function ($c) {
 };
 
 $container['doctrine'] = function ($c) {
-    $entityManager = require __DIR__ . '/../bootstrap/doctrine.php';
+    $entityManager = require BOOTSTRAP . '/doctrine.php';
     return $entityManager;
 };
 

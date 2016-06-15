@@ -8,22 +8,22 @@ if (PHP_SAPI == 'cli-server') {
     }
 }
 
-require __DIR__ . '/../vendor/autoload.php';
+define('PROJECT_ROOT', __DIR__ . '/..');
+define('VENDOR', PROJECT_ROOT . '/vendor');
+define('BOOTSTRAP', PROJECT_ROOT . '/bootstrap');
+define('CONFIG', PROJECT_ROOT . '/config');
+define('APP', PROJECT_ROOT . '/app');
+
+require VENDOR . '/autoload.php';
 
 session_start();
 
-// Instantiate the app
-$settings = require __DIR__ . '/../bootstrap/settings.php';
+$settings = require BOOTSTRAP . '/settings.php';
 $app = new \Slim\App($settings);
 
-// Set up dependencies
-require __DIR__ . '/../bootstrap/dependencies.php';
-
-// Register middleware
-require __DIR__ . '/../bootstrap/middleware.php';
-
-// Register routes
-require __DIR__ . '/../bootstrap/routes.php';
+require BOOTSTRAP . '/dependencies.php';
+require BOOTSTRAP . '/middleware.php';
+require BOOTSTRAP . '/routes.php';
 
 // Run app
 $app->run();
