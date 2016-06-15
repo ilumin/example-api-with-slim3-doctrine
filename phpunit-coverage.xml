@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit
-    bootstrap="tests/bootstrap.php">
+    bootstrap="phpunit/bootstrap.php">
 
     <testsuites>
         <testsuite name="Unit test">
-            <directory suffix="Test.php">tests/unit</directory>
+            <directory suffix="Test.php">phpunit/unit</directory>
         </testsuite>
     </testsuites>
 
