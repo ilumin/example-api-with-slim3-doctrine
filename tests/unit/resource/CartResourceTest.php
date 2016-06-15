@@ -276,7 +276,6 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
     public function testUpdateNotExistItem()
     {
         $this->mockTransaction('rollback');
-
         $this->mockGetVariant(null);
 
         $variant_id = 1;
@@ -323,5 +322,49 @@ class CartResourceTest extends PHPUnit_Framework_TestCase
         $this->assertSame( $expected['item_count'], $result['item_count'] );
         $this->assertSame( $expected['item_total_price'], $cartItem->totalPrice );
         $this->assertSame( $expected['item_quantity'], $cartItem->quantity );
+    }
+
+    /**
+     * @expectedException \Exception
+     * @expectedExceptionMessage Cannot remove item from cart (Required variant.).
+     */
+    public function testRemoveNotExistsItem()
+    {
+        $this->mockTransaction('rollback');
+        $this->mockGetVariant(null);
+
+        $variant_id = 1;
+        $cart = new CartResource($this->doctrine);
+        $cart->remove($variant_id);
+    }
+
+    public function testRemoveItem()
+    {
+        $variantEntity = new Variant([
+            'name'  => 'dummy',
+            'sku'   => '100',
+            'price' => 100,
+        ]);
+        $variantEntity->id = 1;
+
+        $cartEntity = new Cart();
+        $cartEntity->addItem($variantEntity, 1);
+
+        $expected = [
+            'total_price' => 0,
+            'item_count' => 0,
+        ];
+
+        $this->mockTransaction('commit');
+        $this->mockGetVariant($variantEntity);
+        $this->mockGetCart($cartEntity);
+        $this->mockSaveData();
+
+        $variant_id = 1;
+        $cart = new CartResource($this->doctrine);
+        $result = $cart->remove($variant_id);
+
+        $this->assertSame( $expected['total_price'], $result['total_price'] );
+        $this->assertSame( $expected['item_count'], $result['item_count'] );
     }
 }
