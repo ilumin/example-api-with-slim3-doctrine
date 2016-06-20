@@ -3,7 +3,7 @@
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
-$databaseConfig = require CONFIG . '/database.php';
+$databaseConfig = require __DIR__ . '/../config/database.php';
 $doctrineConfig = Setup::createAnnotationMetadataConfiguration(
     $databaseConfig['meta']['entityPath'],
     $databaseConfig['meta']['auto_generate_proxies'],
