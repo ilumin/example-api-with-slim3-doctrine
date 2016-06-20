@@ -3,7 +3,7 @@
 $config = array(
     'meta' => array(
         'entityPath' => array(
-            __DIR__ . '/../app/entity',
+            __DIR__ . '/../appsrc/entity',
         ),
         'auto_generate_proxies' => true,
         'proxy_dir'             => __DIR__ . '/../cache/proxies',
